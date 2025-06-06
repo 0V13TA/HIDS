@@ -6,4 +6,4 @@ source ../.venv/bin/activate
 cd ../
 
 # Run the HIDS main script
-python3 main.py
+nohup python3 main.py > hids.log 2>&1 &
