@@ -1,17 +1,15 @@
 import time
 import schedule
 from utils.hash_db import init_db
+from config import HIDS_IS_HASHED
 from utils.hash_db import get_all_watch_directories
-from config import HIDS_WATCH_DIRECTORY, HIDS_IS_HASHED
 from utils.hash_comparator import generate_file_hashes, compare_all_hashes
 
 # taskkill /IM python.exe /F
 # pkill -f "python3 main.py"
 
 if __name__ == "__main__":
-    from utils.init_hids import init_hids_environment
 
-    init_hids_environment()
     init_db()
 
 
