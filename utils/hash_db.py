@@ -5,7 +5,7 @@ from config import HIDS_HASHES_FILE
 
 def init_db():
     with sqlite3.connect(HIDS_HASHES_FILE) as conn:
-        conn.execute(
+        conn.executescript(
             """
             CREATE TABLE IF NOT EXISTS file_hashes (
                 path TEXT PRIMARY KEY,
