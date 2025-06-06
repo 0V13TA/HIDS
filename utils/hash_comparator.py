@@ -31,11 +31,13 @@ def compare_hashes(file_path: str, known_hash: str) -> bool:
     return current_hash == known_hash
 
 
-def compare_all_hashes(directory: str):
+def compare_all_hashes(directory: str) -> bool:
     all_hashes = get_hashes_from_db(directory)
     for file_path, known_hash in all_hashes.items():
         if not compare_hashes(file_path, known_hash):
-            print_to_file(f"Hash mismatch for file: {file_path}", "warning")
+            print_to_file(f"Hash mismatch for file: {file_path}", "severe")
+            return False
+    return True
 
 
 def generate_file_hashes(directory: str) -> dict[str, str]:
