@@ -44,6 +44,7 @@ def generate_file_hashes(directory: str) -> dict[str, str]:
     """
     Recursively get a dictionary of file paths and their SHA-256 hashes in the given directory.
     This function is similar to get_file_hashes but explicitly emphasizes recursion.
+    Skips any directory named '.config'.
     """
     file_hashes: dict[str, str] = {}
 
@@ -54,6 +55,9 @@ def generate_file_hashes(directory: str) -> dict[str, str]:
     def _recursive_hash(dir_path: str):
         try:
             for entry in os.scandir(dir_path):
+                # Skip any directory named '.config'
+                if entry.is_dir() and entry.name == ".config":
+                    continue
                 if entry.is_file():
                     file_hash = hash_file(entry.path)  # hash file writes to DB
                     if file_hash is not None:
