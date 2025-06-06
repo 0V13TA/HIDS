@@ -1,5 +1,6 @@
 import time
 import schedule
+from utils.logger import print_to_file
 from utils.hash_db import init_db
 from config import HIDS_IS_HASHED
 from utils.hash_db import get_all_watch_directories
@@ -23,6 +24,7 @@ def job() -> None:
     if not compare_all_hashes(watched_dirs):
         print("Hash comparison failed! Possible file tampering detected.")
     else:
+        print_to_file("Hash comparison successful. No tampering detected.", "info")
         print("Hash comparison successful.")
 
 
