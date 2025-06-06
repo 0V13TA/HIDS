@@ -31,23 +31,34 @@ def compare_hashes(file_path: str, known_hash: str) -> bool:
     return current_hash == known_hash
 
 
-def compare_all_hashes(directory: str) -> bool:
-    all_hashes = get_hashes_from_db(directory)
-    for file_path, known_hash in all_hashes.items():
-        if not compare_hashes(file_path, known_hash):
-            print_to_file(f"Hash mismatch for file: {file_path}", "severe")
-            return False
-    return True
+def compare_all_hashes(directories: list[str]) -> bool:
+    """
+    Compare hashes for all files in all watched directories.
+    Returns True if all match, False if any mismatch.
+    """
+    all_ok = True
+    for directory in directories:
+        all_hashes = get_hashes_from_db(directory)
+        for file_path, known_hash in all_hashes.items():
+            if not compare_hashes(file_path, known_hash):
+                print_to_file(f"Hash mismatch for file: {file_path}", "severe")
+                all_ok = False
+    return all_ok
 
 
-def generate_file_hashes(directory: str) -> dict[str, str]:
+def generate_file_hashes(directories: list[str]) -> dict[str, str]:
     """
-    Recursively get a dictionary of file paths and their SHA-256 hashes in the given directory.
-    This function is similar to get_file_hashes but explicitly emphasizes recursion.
-    Skips any directory named '.config'.
+    Generate hashes for all files in all watched directories.
+    Returns a dict of file_path: hash.
     """
+    all_hashes = {}
+    for directory in directories:
+        all_hashes.update(_generate_file_hashes_single(directory))
+    return all_hashes
+
+
+def _generate_file_hashes_single(directory: str) -> dict[str, str]:
     file_hashes: dict[str, str] = {}
-
     if not os.path.isdir(directory):
         print_to_file(f"Directory not found: '{directory}'", "error")
         return file_hashes
@@ -55,11 +66,10 @@ def generate_file_hashes(directory: str) -> dict[str, str]:
     def _recursive_hash(dir_path: str):
         try:
             for entry in os.scandir(dir_path):
-                # Skip any directory named '.config'
                 if entry.is_dir() and entry.name == ".config":
                     continue
                 if entry.is_file():
-                    file_hash = hash_file(entry.path)  # hash file writes to DB
+                    file_hash = hash_file(entry.path)
                     if file_hash is not None:
                         file_hashes[entry.path] = file_hash
                 elif entry.is_dir():
