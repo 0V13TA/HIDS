@@ -17,7 +17,8 @@ if not HIDS_IS_HASHED:
 
 def job() -> None:
     if not compare_all_hashes(HIDS_WATCH_DIRECTORY):
-        print("Hash comparison failed.")
+        print("Hash comparison failed! Possible file tampering detected.")
+        # Optionally, add more actions here (logging, alerting, etc.)
     else:
         print("Hash comparison successful.")  # pragma: no cover
 
