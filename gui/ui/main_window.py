@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLineEdit,
     QListWidget,
+    QFileDialog,
 )
 from PySide6.QtCore import Qt, Qt
 from utils.hash_db import add_watch_directory, remove_watch_directory, get_all_watch_directories
@@ -118,10 +119,20 @@ class MainWindow(QMainWindow):
         form_layout = QHBoxLayout()
         dir_input = QLineEdit()
         dir_input.setPlaceholderText("Enter directory to watch")
+        browse_btn = QPushButton("Browse")
         add_btn = QPushButton("Add Directory")
         form_layout.addWidget(dir_input)
+        form_layout.addWidget(browse_btn)
         form_layout.addWidget(add_btn)
         layout.addLayout(form_layout)
+
+        # Browse button action
+        def browse_directory():
+            dir_path = QFileDialog.getExistingDirectory(page, "Select Directory")
+            if dir_path:
+                dir_input.setText(dir_path)
+
+        browse_btn.clicked.connect(browse_directory)
 
         # List of watched directories
         dir_list = QListWidget()
