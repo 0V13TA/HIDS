@@ -15,7 +15,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("ovieta-HIDS")
+        self.setWindowTitle("OVIETA HIDS")
         self.setGeometry(100, 100, 900, 600)
         self.setStyleSheet(
             """
@@ -95,7 +95,7 @@ class MainWindow(QMainWindow):
     def page_dashboard(self):
         page = QWidget()
         layout = QVBoxLayout()
-        label = QLabel("Dashboard Page")
+        label = QLabel("Dashboard")
         label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         label.setStyleSheet("font-size: 24px; color: #222;")
         layout.addWidget(label)
