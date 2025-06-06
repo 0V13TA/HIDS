@@ -8,6 +8,7 @@ __pycache__/
 *.mypy_cache
 logs/
 *.db
+hids_hashes.db
 # Environment files
 .env
 secure/
