@@ -97,4 +97,4 @@ Organizations can enhance their security posture by deploying file integrity che
 1. [Scarfone, K., & Mell, P. (2007). _Guide to Intrusion Detection and Prevention Systems (IDPS)_. NIST Special Publication 800-94.](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf)
 2. [Tripwire Enterprise](https://www.tripwire.com/products/tripwire-enterprise)
 3. [AIDE Project](https://aide.github.io/)
-4. [PCI DSS Requirements and Security Assessment Procedures, v4.0.](https://attack.mitre.org/techniques/T1070/)
+4. [PCI DSS Requirements and Security Assessment Procedures, v4.0.](https://www.pcisecuritystandards.org/document_library/)
