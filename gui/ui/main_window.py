@@ -7,8 +7,11 @@ from PySide6.QtWidgets import (
     QPushButton,
     QStackedWidget,
     QHBoxLayout,
+    QLineEdit,
+    QListWidget,
 )
 from PySide6.QtCore import Qt, Qt
+from utils.hash_db import add_watch_directory, remove_watch_directory, get_all_watch_directories
 
 
 class MainWindow(QMainWindow):
@@ -105,10 +108,52 @@ class MainWindow(QMainWindow):
     def page_settings(self):
         page = QWidget()
         layout = QVBoxLayout()
+
         label = QLabel("Settings Page")
         label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         label.setStyleSheet("font-size: 24px; color: #222;")
         layout.addWidget(label)
+
+        # Directory input form
+        form_layout = QHBoxLayout()
+        dir_input = QLineEdit()
+        dir_input.setPlaceholderText("Enter directory to watch")
+        add_btn = QPushButton("Add Directory")
+        form_layout.addWidget(dir_input)
+        form_layout.addWidget(add_btn)
+        layout.addLayout(form_layout)
+
+        # List of watched directories
+        dir_list = QListWidget()
+        dir_list.addItems(get_all_watch_directories())
+        layout.addWidget(dir_list)
+
+        # Remove button
+        remove_btn = QPushButton("Remove Selected Directory")
+        layout.addWidget(remove_btn)
+
+        # Add directory action
+        def add_directory():
+            path = dir_input.text().strip()
+            if path:
+                add_watch_directory(path)
+                dir_list.clear()
+                dir_list.addItems(get_all_watch_directories())
+                dir_input.clear()
+
+        add_btn.clicked.connect(add_directory)
+
+        # Remove directory action
+        def remove_directory():
+            selected_items = dir_list.selectedItems()
+            if selected_items:
+                for item in selected_items:
+                    remove_watch_directory(item.text())
+                dir_list.clear()
+                dir_list.addItems(get_all_watch_directories())
+
+        remove_btn.clicked.connect(remove_directory)
+
         page.setLayout(layout)
         return page
 
