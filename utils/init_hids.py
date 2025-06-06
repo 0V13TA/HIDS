@@ -8,6 +8,12 @@ def init_hids_environment():
         os.makedirs(HIDS_LOG_FOLDER)
         print(f"Created log folder: {HIDS_LOG_FOLDER}")
 
+    # Ensure parent directory for hashes file exists
+    hashes_dir = os.path.dirname(HIDS_HASHES_FILE)
+    if hashes_dir and not os.path.exists(hashes_dir):
+        os.makedirs(hashes_dir)
+        print(f"Created hashes directory: {hashes_dir}")
+
     # Create hashes file if it doesn't exist
     if not os.path.exists(HIDS_HASHES_FILE):
         with open(HIDS_HASHES_FILE, "w"):
