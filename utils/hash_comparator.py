@@ -1,7 +1,7 @@
 import os
 import hashlib
-from logger import print_to_file
-from hash_db import get_hash, write_hash
+from utils.logger import print_to_file
+from utils.hash_db import get_hash, write_hash
 
 
 def hash_file(file_path: str) -> str | None:
